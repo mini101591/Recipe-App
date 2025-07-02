@@ -1,33 +1,61 @@
-import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '@/components/HomeScreen';
-import AboutScreen from '@/components/AboutScreen';
-import { Pressable, Text } from 'react-native';
+import 'react-native-gesture-handler';
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import RecipeDetails from '@/components/RecipeDetails';
+import RecipeList from '@/components/RecipeList';
+import  Ionicons  from '@expo/vector-icons/Ionicons';
+import StackNav from './StackNav';
 
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
+
+export const AboutDrawer = () =>{
+    return(
+        <Drawer.Navigator screenOptions={{
+            drawerActiveTintColor:'#333',
+            drawerActiveBackgroundColor:'white',
+            drawerContentStyle:{
+                backgroundColor:"#c6cbef",
+            }
+        }}>
+            <Drawer.Screen 
+            name='List' 
+            component={RecipeList}
+            options={{
+                title:'My Recipes',
+                drawerLabel:'RecipeList',
+            }}
+            />
+            <Drawer.Screen name='Details' component={RecipeDetails}/>
+        </Drawer.Navigator>
+    );
+}
 
 export default function App() {
   return (
-        <Stack.Navigator initialRouteName="Home" screenOptions={{
-          headerTintColor:"purple",
-          headerRight:()=>(
-            <Pressable onPress={()=>alert("Menu Button Pressed")}>
-              <Text>Menu</Text>
-            </Pressable>
-          ),
-          contentStyle:{
-            backgroundColor:"#e8e4f3"
-          }
+        <Tab.Navigator screenOptions={{
+            tabBarLabelPosition:"below-icon",
+            tabBarShowLabel:true,
+            tabBarActiveTintColor:'purple',
         }}>
-            <Stack.Screen 
-            name="Home" 
-            component={HomeScreen} 
-            options={{
-              title:"Welcome Home",
-            }}
+            <Tab.Screen 
+                name="List" 
+                component={RecipeList}
+                options={{
+                    tabBarIcon:({color})=> <Ionicons name="list" size={20} color={color}/>,
+                    tabBarBadge:3,
+                }}
             />
-            <Stack.Screen name="About" component={AboutScreen} initialParams={{name:"Guest"}}/>
-        </Stack.Navigator>
+            <Tab.Screen name="Details" component={RecipeDetails}  
+                 options={{
+                    tabBarIcon:({color})=> <Ionicons name="information-circle" size={20} color={color} />
+                }}
+            />
+            <Tab.Screen name="abouttab" component={AboutDrawer}/>
+            <Tab.Screen name="StackNav" component={StackNav} options={{
+                headerShown:false,
+            }}/>
+        </Tab.Navigator>
+        
   );
 }
-

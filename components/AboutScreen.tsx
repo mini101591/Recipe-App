@@ -1,29 +1,29 @@
-import {View,Text,StyleSheet,Button} from "react-native";
+import {View,Text,StyleSheet} from "react-native";
 
-const AboutScreen = ({ route, navigation }) => {    
-  const {name} = route.params;
+const AboutScreen = () => {    
     return(
        <View style={styles.container}>
-            <Text style={styles.heading}>About Screen {name}</Text>
-            <Button title="update the name" onPress={()=>navigation.setParams({
-              name:"Jiya"
-            })} />
-            <Button title="Go Back with data" 
-            onPress={()=>
-              navigation.navigate("Home",{result:"Data from About"}) } />
-        </View>
+      <Text style={styles.title}>About Us</Text>
+      <Text style={styles.text}>
+        This is a simple recipe app built with React Native. It shows a list of recipes, details of each recipe, and information about the app.
+      </Text>
+    </View>
     )
 }
 
 export const styles = StyleSheet.create({
-   container:{
-        alignItems:'center',
-    },
-  heading:{
-    fontSize: 26,
-    marginBottom: 20,
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 15,
     fontWeight: 'bold',
-    color:'Black',
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 22,
   },
   
 });
